@@ -1,43 +1,33 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <router-link class="navbar-brand" to="/">MEVN-Auth</router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <router-link to="/" class="nav-link">
-            Home
-            <span class="sr-only">(current)</span>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/about" class="nav-link">About</router-link>
-        </li>
-        <li class="nav-item" v-if="!isLoggedIn">
-          <router-link to="/login" class="nav-link">Login</router-link>
-        </li>
-        <li class="nav-item" v-if="!isLoggedIn">
-          <router-link to="/register" class="nav-link">Register</router-link>
-        </li>
-        <li class="nav-item" v-if="isLoggedIn">
-          <router-link to="/profile" class="nav-link">Profile</router-link>
-        </li>
-        <li class="nav-item" v-if="isLoggedIn">
-          <a to="/logout" class="nav-link" @click.prevent="logoutUser">Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand to="/">NavBar</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item to="/">Home</b-nav-item>
+          <b-nav-item to="/login">Login</b-nav-item>
+          <b-nav-item to="/register">Register</b-nav-item>
+          <b-nav-item to="/about">About</b-nav-item>
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <em>User</em>
+            </template>
+            <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item to="/">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 
 <script>

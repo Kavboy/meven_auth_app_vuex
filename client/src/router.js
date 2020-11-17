@@ -21,48 +21,19 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('./views/Login.vue'),
-      meta: {
-        requiresGuest: true
-      }
+      component: () => import('./views/Login.vue')
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import('./views/Register.vue'),
-      meta: {
-        requiresGuest: true
-      }
+      component: () => import('./views/Register.vue')
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('./views/Profile.vue'),
-      meta: {
-        requiresAuth: true
-      }
+      component: () => import('./views/Profile.vue')
     },
   ]
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.isLoggedIn) {
-      // Redirect to the Login Page
-      next('/login');
-    } else {
-      next();
-    }
-  } else if (to.matched.some(record => record.meta.requiresGuest)) {
-    if (store.getters.isLoggedIn) {
-      // Redirect to the Login Page
-      next('/profile');
-    } else {
-      next();
-    }
-  } else {
-    next()
-  }
 });
 
 export default router;

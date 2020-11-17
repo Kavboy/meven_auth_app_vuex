@@ -9,13 +9,6 @@ const state = {
 };
 
 const getters = {
-    // isLoggedIn: function (state) {
-    //     if (state.token != '') {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
     isLoggedIn: state => !!state.token,
     authState: state => state.status,
     user: state => state.user,
@@ -58,25 +51,6 @@ const actions = {
         } catch (err) {
             commit('register_error', err)
         }
-    },
-    // Get the user Profile
-    async getProfile({
-        commit
-    }) {
-        commit('profile_request');
-        let res = await axios.get('/api/users/profile')
-        commit('user_profile', res.data.user)
-        return res;
-    },
-    // Logout the user
-    async logout({
-        commit
-    }) {
-        await localStorage.removeItem('token');
-        commit('logout');
-        delete axios.defaults.headers.common['Authorization'];
-        router.push('/login');
-        return
     }
 };
 
