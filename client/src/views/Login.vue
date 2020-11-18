@@ -41,27 +41,29 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
-      username: "",
-      password: ""
+      username: '',
+      password: '',
     };
   },
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions(['login']),
     loginUser() {
       let user = {
         username: this.username,
-        password: this.password
+        password: this.password,
       };
       this.login(user)
-        .then(res => {
-          if (res.data.success) {
-            this.$router.push("/profile");
-          }
-        })
+          .then(res => {
+            console.log(res);
+            if (res.data.success) {
+              this.$router.push('/profile');
+            }
+          })
         .catch(err => {
           console.log(err);
         });

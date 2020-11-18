@@ -22,7 +22,7 @@ const actions = {
     }, user) {
         commit('auth_request');
         try {
-            let res = await axios.post('/api/users/login', user)
+            let res = await axios.post('http://localhost:5000/api/users/login', user);
             if (res.data.success) {
                 const token = res.data.token;
                 const user = res.data.user;
@@ -39,19 +39,22 @@ const actions = {
     },
     // Register User
     async register({
-        commit
-    }, userData) {
-        try {
-            commit('register_request');
-            let res = await axios.post('/api/users/register', userData);
-            if (res.data.success !== undefined) {
-                commit('register_success');
-            }
-            return res;
-        } catch (err) {
-            commit('register_error', err)
+                       commit,
+                   }, userData) {
+        commit('register_request');
+        const res = await axios.post('http://localhost:5000/api/users/register', userData);
+        if (res.data.success !== undefined) {
+            commit('register_success');
         }
-    }
+        return res;
+    },
+    //Logout
+    async logout({commit}) {
+        await localStorage.removeItem('token');
+        commit('logout');
+        delete axios.defaults.headers.common.Authorization;
+        router.push('/login');
+    },
 };
 
 const mutations = {
@@ -65,31 +68,16 @@ const mutations = {
         state.status = 'success'
         state.error = null
     },
-    auth_error(state, err) {
-        state.error = err.response.data.msg
-    },
     register_request(state) {
-        state.error = null
         state.status = 'loading'
     },
     register_success(state) {
-        state.error = null
         state.status = 'success'
     },
-    register_error(state, err) {
-        state.error = err.response.data.msg
-    },
     logout(state) {
-        state.error = null
         state.status = ''
         state.token = ''
         state.user = ''
-    },
-    profile_request(state) {
-        state.status = 'loading'
-    },
-    user_profile(state, user) {
-        state.user = user
     }
 };
 

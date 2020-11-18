@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
+require('dotenv').config();
 
 // Initialize the app
 const app = express();
@@ -29,11 +30,10 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Bring in the Database Config and connect with the database
-const db = require('./config/keys').mongoURI;
-mongoose.connect(db, {
-    useNewUrlParser: true
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
 }).then(() => {
-    console.log(`Database connected successfully ${db}`)
+    console.log(`Database connected successfully ${process.env.MONGODB_URI}`);
 }).catch(err => {
     console.log(`Unable to connect with the database ${err}`)
 });

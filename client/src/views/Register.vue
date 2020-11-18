@@ -74,34 +74,37 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
-      username: "",
-      password: "",
-      confirm_password: "",
-      name: "",
-      email: ""
+      username: '',
+      password: '',
+      confirm_password: '',
+      name: '',
+      email: '',
     };
   },
   methods: {
-    ...mapActions(["register"]),
+    ...mapActions(['register']),
     registerUser() {
-      let user = {
+      const user = {
         username: this.username,
         password: this.password,
         confirm_password: this.confirm_password,
         email: this.email,
-        name: this.name
+        name: this.name,
       };
-      this.register(user).then(res => {
-        if (res.data.success) {
-          this.$router.push("login");
-        }
-      });
-    }
-  }
+      this.register(user)
+          .then(res => {
+            if (res.data.success) {
+              this.$router.push('login');
+            }
+          });
+    },
+  },
+
 };
 </script>
 

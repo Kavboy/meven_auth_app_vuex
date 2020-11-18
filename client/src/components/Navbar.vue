@@ -13,16 +13,16 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/">Home</b-nav-item>
-          <b-nav-item to="/login">Login</b-nav-item>
-          <b-nav-item to="/register">Register</b-nav-item>
+          <b-nav-item v-if="!isLoggedIn" to="/login">Login</b-nav-item>
+          <b-nav-item v-if="!isLoggedIn" to="/register">Register</b-nav-item>
           <b-nav-item to="/about">About</b-nav-item>
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown v-if="isLoggedIn" right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em>User</em>
+              User
             </template>
             <b-dropdown-item to="/profile">Profile</b-dropdown-item>
-            <b-dropdown-item to="/">Sign Out</b-dropdown-item>
+            <b-dropdown-item @click.prevent="logoutUser">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -31,17 +31,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(['isLoggedIn']),
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(['logout']),
     logoutUser() {
       this.logout();
-    }
-  }
+    },
+  },
 };
 </script>
 
